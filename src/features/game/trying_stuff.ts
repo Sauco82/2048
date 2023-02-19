@@ -31,20 +31,80 @@ export function gridToString(grid: Grid): string {
     .join("\n");
 }
 
-export function shiftGrid(grid: Grid, direction = "LEFT") {
-  //will get direction
-  // PUSH LEFT == col - 1
+export type Direction = "LEFT" | "RIGHT" | "UP" | "DOWN";
+
+export function iteratorToPosition(
+  i: number,
+  j: number,
+  direction: Direction,
+  size: number
+) {
+  switch (direction) {
+    case "LEFT":
+      return { row: i, col: j };
+    case "RIGHT":
+      return { row: i, col: size - j - 1 };
+    case "DOWN":
+      return { row: j, col: i };
+    case "UP":
+      return { row: size - j - 1, col: i };
+    default:
+      throw new Error("Invalid position");
+  }
+}
+
+type Dimension = "row" | "col";
+
+export function directionToCoordName(direction: Direction): Dimension {
+  switch (direction) {
+    case "LEFT":
+    case "RIGHT":
+      return "col";
+    case "DOWN":
+    case "UP":
+      return "row";
+  }
+}
+
+type Increment = 1 | -1;
+
+export function directionToIncrement(direction: Direction): Increment {
+  switch (direction) {
+    case "LEFT":
+    case "DOWN":
+      return 1;
+    case "RIGHT":
+    case "UP":
+      return -1;
+  }
+}
+
+export function directionBorderIndex(direction: Direction, size: number) {
+  switch (direction) {
+    case "LEFT":
+    case "UP":
+      return 0;
+    case "RIGHT":
+    case "DOWN":
+      return size - 1;
+  }
+}
+
+export function shiftGrid(grid: Grid, direction: Direction = "LEFT") {
   const size = grid.length;
   const lastMergeables = Array(size).fill(null);
+  const coordName = directionToCoordName(direction);
+  const increment = directionToIncrement(direction);
+  const borderIndex = directionBorderIndex(direction, size);
 
-  for (let row = 0; row < size; row++) {
-    for (let col = 0; col < size; col++) {
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      const { col, row } = iteratorToPosition(i, j, direction, size);
       const cell = grid[row][col];
-      //lastMergeable just needs to match the top iterator it is independent from rows and columns
-      const lastMergeable = lastMergeables[row];
+      const lastMergeable = lastMergeables[i];
 
       if (!cell) continue;
-      if (cell["col"] === 0) {
+      if (cell[coordName] === borderIndex) {
         lastMergeables[row] = cell;
         continue;
       }
@@ -54,15 +114,17 @@ export function shiftGrid(grid: Grid, direction = "LEFT") {
 
       if (canBeMerged) {
         // merge
-        cell["col"] = lastMergeable["col"];
+        cell[coordName] = lastMergeable[coordName];
         cell.toRemove = true;
         lastMergeable.value *= 2;
         lastMergeable.merged = true;
         grid[row][col] = null;
       } else {
         // move
-        cell["col"] = lastMergeable ? lastMergeable["col"] + 1 : 0;
-        lastMergeables[row] = cell;
+        cell[coordName] = lastMergeable
+          ? lastMergeable[coordName] + increment
+          : borderIndex;
+        lastMergeables[i] = cell;
         grid[row][col] = null;
         insertCellInGrid(cell, grid);
       }
