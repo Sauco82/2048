@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import gameGrid from '../features/game-grid/gameGridSlice'
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    gameGrid
   },
 });

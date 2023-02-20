@@ -1,39 +1,150 @@
-.App {
-  text-align: center;
+:root {
+  /* COLORS */
+  --translucent-gray-500: rgba(74,78,54,0.09); 
+  --green-300: rgba(219,219,219,0.89);
+  --yellow-300: #F0E3BA;
+  --yellow-500: #F9DC7E;
+  --orange-300: #F2CE58;
+  --orange-500: #EC9F05;
+  --red-300: #FF4E00;
+  --red-500: #BF3100;
+  --black-text: rgba(30,30,30,0.84);
+  --white-text: rgba(255,255,255,0.84);
+  /* SIZES */
+  --border-radius: 5px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  color: var(--black-text);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
+h1 {
+  font-size: 50px;
+  font-weight: 900;
 }
 
-.App-header {
-  min-height: 100vh;
+.game {
+  background: var(--orange-500);
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: top;
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+.grid-wrapper {
+  margin-top: 40px;
+  position: relative;  
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+.grid {
+  background: var(--green-300);
+  border-radius: var(--border-radius);
+  border-spacing: 10px;
 }
+
+.grid td {
+  background-color: var(--translucent-gray-500);
+  border-radius: var(--border-radius);
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  padding: 0;
+}
+
+.cell {
+  position: absolute;
+  border-radius: var(--border-radius);
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  font-size: 50px;
+  font-weight: 900;
+  text-align: center;
+  display: block;
+  background: var(--yellow-300);
+  z-index: 0;
+  transition: top .2s,left .2s;
+}
+
+.cell-1024,
+.cell-2048 {
+  font-size: 35px;
+}
+
+.cell-4 { 
+  background: var(--yellow-500); 
+}
+
+.cell-8 { 
+  background: var(--yellow-500); 
+}
+
+.cell-16 { 
+  background: var(--orange-300); 
+}
+
+.cell-32, 
+.cell-64,
+.cell-128,
+.cell-256,
+.cell-512,
+.cell-1024,
+.cell-2048 {
+  color: var(--white-text);
+}
+
+.cell-32, 
+.cell-64 { 
+  background: var(--orange-500); 
+}
+
+.cell-128,
+.cell-256,
+.cell-512 {
+  background: var(--red-300); 
+}
+
+.cell-1024,
+.cell-2048 {
+  background: var(--red-500); 
+}
+
+.cell-2{ z-index: 1;}
+.cell-4{ z-index: 2;}
+.cell-8{ z-index: 3;}
+.cell-16{ z-index: 4;}
+.cell-32{ z-index: 5;}
+.cell-64{ z-index: 6;}
+.cell-128{ z-index: 7;}
+.cell-256{ z-index: 8;}
+.cell-512{ z-index: 9;}
+.cell-1024{ z-index: 10;}
+.cell-2048{ z-index: 11;}
+
+.cell-1    { animation: .2s .2s normal ease-in Cell1; }
+.cell-2    { animation: .2s normal ease-in Cell2; }
+.cell-4    { animation: .2s normal ease-in Cell4; }
+.cell-8    { animation: .2s normal ease-in Cell8; }
+.cell-16   { animation: .2s normal ease-in Cell16; }
+.cell-32   { animation: .2s normal ease-in Cell32; }
+.cell-64   { animation: .2s normal ease-in Cell64; }
+.cell-128  { animation: .2s normal ease-in Cell128; }
+.cell-256  { animation: .2s normal ease-in Cell256; }
+.cell-512  { animation: .2s normal ease-in Cell512; }
+.cell-1024 { animation: .2s normal ease-in Cell1024; }
+.cell-2048 { animation: .2s normal ease-in Cell2048; }
+
+@keyframes Cell1 { 50% { transform: scale(110%);} }
+@keyframes Cell2 { 50% { transform: scale(120%);} }
+@keyframes Cell4 { 50% { transform: scale(130%);} }
+@keyframes Cell8 { 50% { transform: scale(140%);} }
+@keyframes Cell16 { 50% { transform: scale(150%);} }
+@keyframes Cell32 { 50% { transform: scale(160%);} }
+@keyframes Cell64 { 50% { transform: scale(170%);} }
+@keyframes Cell128 { 50% { transform: scale(180%);} }
+@keyframes Cell256 { 50% { transform: scale(180%);} }
+@keyframes Cell512 { 50% { transform: scale(190%);} }
+@keyframes Cell1024 { 50% { transform: scale(190%) rotateX(90deg);} }
+@keyframes Cell2048 { 50% { transform: scale(200%) rotateY(90deg);} }
