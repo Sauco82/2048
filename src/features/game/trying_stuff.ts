@@ -45,17 +45,17 @@ export function iteratorToPosition(
     case "RIGHT":
       return { row: i, col: size - j - 1 };
     case "DOWN":
-      return { row: j, col: i };
-    case "UP":
       return { row: size - j - 1, col: i };
+    case "UP":
+      return { row: j, col: i };
     default:
       throw new Error("Invalid position");
   }
 }
 
-type Dimension = "row" | "col";
+type Axis = "row" | "col";
 
-export function directionToCoordName(direction: Direction): Dimension {
+export function directionToCoordName(direction: Direction): Axis {
   switch (direction) {
     case "LEFT":
     case "RIGHT":
@@ -71,10 +71,10 @@ type Increment = 1 | -1;
 export function directionToIncrement(direction: Direction): Increment {
   switch (direction) {
     case "LEFT":
-    case "DOWN":
+    case "UP":
       return 1;
     case "RIGHT":
-    case "UP":
+    case "DOWN":
       return -1;
   }
 }
@@ -105,7 +105,7 @@ export function shiftGrid(grid: Grid, direction: Direction = "LEFT") {
 
       if (!cell) continue;
       if (cell[coordName] === borderIndex) {
-        lastMergeables[row] = cell;
+        lastMergeables[i] = cell;
         continue;
       }
 
