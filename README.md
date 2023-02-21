@@ -26,7 +26,7 @@ Due to the time limitations I needed to sacrifice putting some effort on several
 
 ### CSS and general styling
 
-I didn't put any effort thinking on a proper CSS strategy: preprocessors, file splitting, I even ended coupling the CSS and the Cells.tsx component with magic numbers. Design-wise even though it ended up looking alright I still missed having the possibility to iterate more.
+I didn't put any effort thinking on a proper CSS strategy: preprocessors, file splitting, the app just gets cut out if the screen is not big enough or resized,I even ended coupling the CSS and the Cells.tsx component with magic numbers. Design-wise even though it ended up looking alright I still missed having the possibility to iterate more.
 
 ### File structure
 
