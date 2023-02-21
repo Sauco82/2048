@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { cellsSelector, slide, cleanCells, cleanSelector, availableDirectionsSelector } from "./gameGridSlice";
+import { cellsSelector, slide, prepareNextRound, cleanSelector, availableDirectionsSelector } from "./gameGridSlice";
 
 function cellPosition({ row, col }: { row: number, col: number }) {
   return ({
@@ -17,14 +17,14 @@ const Cells = () => {
   const trackDirections = useRef(null)
 
   useEffect(() => {
-    if (!clean) setTimeout(() => dispatch(cleanCells()), 200)
+    if (!clean) setTimeout(() => dispatch(prepareNextRound()), 200)
   }, [clean, dispatch])
 
   useEffect(() => {
     if (trackDirections.current) window.removeEventListener("keydown", trackDirections.current)
 
     trackDirections.current = ({ key }) => {
-      if (!clean) return dispatch(cleanCells());
+      if (!clean) return dispatch(prepareNextRound());
 
       switch (key) {
         case "ArrowDown":

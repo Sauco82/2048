@@ -70,7 +70,6 @@ export function calculateSlide(
         if (canBeMerged) {
           // merge
           cell[coordName] = lastMergeable[coordName];
-          cell.toRemove = true;
           lastMergeable.value *= 2;
           lastMergeable.merged = true;
           grid[row][col] = null;

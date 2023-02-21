@@ -11,7 +11,7 @@ import {
   canSlide,
 } from "./utils/grid";
 
-function createInitiaState(size = SIZE) {
+function createInitialState(size = SIZE) {
   const grid = createGrid(size);
   const cells: Cells = {};
 
@@ -24,7 +24,7 @@ function createInitiaState(size = SIZE) {
   };
 }
 
-const initialState = createInitiaState();
+const initialState = createInitialState();
 
 type DirectionArg = {
   payload: {
@@ -41,12 +41,13 @@ export const gameGridSlice = createSlice({
 
       state.grid = newState.grid;
       state.cells = newState.cells;
-      insertRandomCell(state.grid, state.cells);
       state.clean = false;
     },
 
-    cleanCells: (state) => {
+    prepareNextRound: (state) => {
       let newCells = {};
+
+      insertRandomCell(state.grid, state.cells);
 
       Object.values(state.cells).forEach((cell) => {
         const { row, col, uuid } = cell;
@@ -59,7 +60,7 @@ export const gameGridSlice = createSlice({
       state.clean = true;
     },
 
-    resetGame: () => createInitiaState(),
+    resetGame: () => createInitialState(),
   },
 });
 
@@ -112,7 +113,7 @@ export const wonSelector = createSelector([cellsSelector], (cells) => {
 
 // Actions
 // =====================================================================
-export const { slide, cleanCells, resetGame } = gameGridSlice.actions;
+export const { slide, prepareNextRound, resetGame } = gameGridSlice.actions;
 
 // Reducer
 // =====================================================================

@@ -6,7 +6,6 @@ export type Cell = {
   col: number;
   value: number;
   merged: boolean;
-  toRemove: boolean;
 };
 
 export type Cells = {
@@ -18,11 +17,10 @@ export function createCell({
   col = 0,
   value = 2,
   merged = false,
-  toRemove = false,
 } = {}) {
   const uuid = generateUuid();
 
-  return { uuid, row, col, value, merged, toRemove };
+  return { uuid, row, col, value, merged };
 }
 
 export function createRandomCell(
