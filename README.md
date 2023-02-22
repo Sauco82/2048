@@ -69,11 +69,13 @@ The algorithm itself relies on 2 structures `cells` and `grid`.
 The sliding algorithm is the same for all the directions:
 
 - We want to iterate over the grid starting from the border we are sliding to in a way that when we find a cell with a value we:
-  ** If already in the border we are sliding towards, leave it there. But keep a reference to it in `lastMergeables` so that the following cell we find in the same axis of movement can use it instead of re-checking several positions.
-  ** If there is no corresponding reference in `lastMergeables` move to the border and become the reference.
-  ** If there is a mergeable reference in `lastMergeables` duplicate its value and mark it as `merged`, the current cell updates its position to that of the mergeable reference and is marked as `toRemove`
-  ** If there is a non mergeable reference use it to calculate and update the position the cell should be moved to and make the cell become the new `lastMergeable` of the axis
+  1. If already in the border we are sliding towards, leave it there. But keep a reference to it in `lastMergeables` so that the following cell we find in the same axis of movement can use it instead of re-checking several positions.
+  2. If there is no corresponding reference in `lastMergeables` move to the border and become the reference.
+  3. If there is a mergeable reference in `lastMergeables` duplicate its value and mark it as `merged`, the current cell updates its position to that of the mergeable reference and is marked as `toRemove`
+  4. If there is a non mergeable reference use it to calculate and update the position the cell should be moved to and make the cell become the new `lastMergeable` of the axis
 - All this magic is achieved with the same loop for every direction by using a set of utils that allows to convert the `i, j` iterators in the correct `row, col` for the provided `direction` and `size`; and the correct border value (`borderIndex`) and `increment` needed to move cells close to each other.
+
+![Visual example](https://user-images.githubusercontent.com/797738/220580183-7718cad9-6baa-458e-bc80-2b62487836b3.png)
 
 ## The full app
 
